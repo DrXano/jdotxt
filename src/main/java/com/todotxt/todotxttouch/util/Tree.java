@@ -76,11 +76,12 @@ public class Tree<E> {
 	}
 
 	public boolean contains(Tree<E> child) {
-		if (children == null) {
-			return false;
+		boolean res = true;
+		if (children == null || !children.contains(child)) {
+			res = false;
 		}
 
-		return children.contains(child);
+		return res;
 	}
 
 	public boolean contains(E data) {

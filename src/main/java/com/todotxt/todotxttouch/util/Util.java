@@ -28,7 +28,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -118,16 +121,16 @@ public class Util {
 
 	public static void writeFile(InputStream is, File file)
 			throws IOException {
-		FileOutputStream os = new FileOutputStream(file);
-		try {
+		//FileOutputStream os = new FileOutputStream(file);
+		try(OutputStream os = Files.newOutputStream(Paths.get(file.getName()))) {
 			int c;
 			byte[] buffer = new byte[8192];
 			while ((c = is.read(buffer)) != -1) {
 				os.write(buffer, 0, c);
 			}
+			closeStream(os);
 		} finally {
 			closeStream(is);
-			closeStream(os);
 		}
 	}
 

@@ -1,10 +1,10 @@
 package com.chschmid.jdotxt.gui.utils;
 
-import com.todotxt.todotxttouch.task.sorter.Sorters;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.todotxt.todotxttouch.task.sorter.Sorters;
 
 public class SortUtils {
     public static String writeSort(List<Map.Entry<Sorters, Boolean>> sortList) {
@@ -14,7 +14,7 @@ public class SortUtils {
             sb.append(s.getKey().name());
             sb.append(":");
             sb.append(s.getValue().toString());
-            if (s != last)
+            if (!s.equals(last)) // Antes a condição era "s != last"
                 sb.append("|");
         }
         return sb.toString();

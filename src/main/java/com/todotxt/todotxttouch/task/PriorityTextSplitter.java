@@ -56,7 +56,8 @@ public class PriorityTextSplitter {
 		Matcher priorityMatcher = PRIORITY_PATTERN.matcher(text);
 		if (priorityMatcher.find()) {
 			priority = Priority.toPriority(priorityMatcher.group(1));
-			text = priorityMatcher.group(2);
+			return new PrioritySplitResult(priority, priorityMatcher.group(2));
+			//text = priorityMatcher.group(2);
 		}
 		return new PrioritySplitResult(priority, text);
 	}
