@@ -3,36 +3,20 @@ package com.todotxt.todotxttouch.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import org.junit.Before;
 import org.junit.Test;
 
 public class CursorPositionCalculatorTest {
-
-	private int priorCursorPosition;
-	private String priorValue;
-	private String newValue;
-	private int actual;
-	private int expected;
-
-	@Before
-	public void setUp() {
-		priorCursorPosition = -1;
-		priorValue = null;
-		newValue = null;
-		actual = -1;
-		expected = -1;
-	}
 
 	@Test
 	/*
 	 * Method - calculate
 	 */
 	public void testPositivePositionPValueStrNValueStr() {
-		priorCursorPosition = 1;
-		priorValue = "qwe";
-		newValue = "qwerty";
-		actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
-		expected = 4;
+		int priorCursorPosition = 1;
+		String priorValue = "qwe";
+		String newValue = "qwerty";
+		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
+		int expected = 4;
 
 		assertEquals(expected, actual);
 	}
@@ -42,11 +26,11 @@ public class CursorPositionCalculatorTest {
 	 * Method - calculate
 	 */
 	public void testPValueStrNValueNull() {
-		priorCursorPosition = 1;
-		priorValue = "qwe";
-		newValue = null;
-		actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
-		expected = 0;
+		int priorCursorPosition = 1;
+		String priorValue = "qwe";
+		String newValue = null;
+		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
+		int expected = 0;
 
 		assertEquals(expected, actual);
 	}
@@ -56,11 +40,11 @@ public class CursorPositionCalculatorTest {
 	 * Method - calculate
 	 */
 	public void testPValueNullNValueStr() {
-		priorCursorPosition = 1;
-		priorValue = null;
-		newValue = "qwerty";
-		actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
-		expected = 6;
+		int priorCursorPosition = 1;
+		String priorValue = null;
+		String newValue = "qwerty";
+		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
+		int expected = 6;
 
 		assertEquals(expected, actual);
 	}
@@ -71,11 +55,11 @@ public class CursorPositionCalculatorTest {
 	 * Aberto
 	 */
 	public void testPValueEmpty() {
-		priorCursorPosition = 1;
-		priorValue = "";
-		newValue = "qwerty";
-		actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
-		expected = 6;
+		int priorCursorPosition = 1;
+		String priorValue = "";
+		String newValue = "qwerty";
+		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
+		int expected = 6;
 
 		assertEquals(expected, actual);
 	}
@@ -85,11 +69,11 @@ public class CursorPositionCalculatorTest {
 	 * Method - calculate
 	 */
 	public void testNegativePosition() {
-		priorCursorPosition = 1;
-		priorValue = "qwerty";
-		newValue = "qwe";
-		actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
-		expected = 0;
+		int priorCursorPosition = 1;
+		String priorValue = "qwerty";
+		String newValue = "qwe";
+		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
+		int expected = 0;
 
 		assertEquals(expected, actual);
 	}
