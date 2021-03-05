@@ -1,6 +1,7 @@
 package com.todotxt.todotxttouch.util;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +22,10 @@ public class StringsTest {
 		actual = null;
 		expected = null;
 	}
+
+	//----------------------------------------------------------------------------------------------------------
+	//------------------------------------------insertPaddedIfNeeded()------------------------------------------
+	//----------------------------------------------------------------------------------------------------------
 
 	@Test
 	/*
@@ -94,5 +99,41 @@ public class StringsTest {
 		stringToInsert = "ccc";
 		insertAt = 10;
 		actual = Strings.insertPaddedIfNeeded(s, insertAt, stringToInsert);
+	}
+	
+	//----------------------------------------------------------------------------------------------------------
+	//------------------------------------------------isBlank()-------------------------------------------------
+	//----------------------------------------------------------------------------------------------------------
+
+	@Test
+	/*
+	 * method - isBlank
+	 */
+	public void test1() {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	/*
+	 * method - isBlank
+	 */
+	public void test2() {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	/*
+	 * method - isBlank
+	 */
+	public void test3() {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	/*
+	 * method - isBlank
+	 */
+	public void test4() {
+		fail("Not yet implemented");
 	}
 }
