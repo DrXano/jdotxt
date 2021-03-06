@@ -1,7 +1,7 @@
 package com.todotxt.todotxttouch.util;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
@@ -17,6 +17,34 @@ public class CursorPositionCalculatorTest {
 		String newValue = "qwerty";
 		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
 		int expected = 4;
+
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	/*
+	 * Method - calculate
+	 */
+	public void testNegativePositionPValueStrNValueStr() {
+		int priorCursorPosition = -1;
+		String priorValue = "qwerty";
+		String newValue = "qwe";
+		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
+		int expected = 0;
+
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	/*
+	 * Method - calculate
+	 */
+	public void testZeroPositionPValueStrNValueStr() {
+		int priorCursorPosition = 0;
+		String priorValue = "qwe";
+		String newValue = "qwerty";
+		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
+		int expected = 3;
 
 		assertEquals(expected, actual);
 	}
@@ -48,14 +76,28 @@ public class CursorPositionCalculatorTest {
 
 		assertEquals(expected, actual);
 	}
+	
 
 	@Test
 	/*
 	 * Method - calculate
-	 * Aberto
+	 */
+	public void testPValueNullNValueNull() {
+		int priorCursorPosition = 0;
+		String priorValue = null;
+		String newValue = null;
+		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
+
+		assertFalse(actual >= 0);
+	}
+	
+
+	@Test
+	/*
+	 * Method - calculate
 	 */
 	public void testPValueEmpty() {
-		int priorCursorPosition = 1;
+		int priorCursorPosition = 0;
 		String priorValue = "";
 		String newValue = "qwerty";
 		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
@@ -68,54 +110,13 @@ public class CursorPositionCalculatorTest {
 	/*
 	 * Method - calculate
 	 */
-	public void testNegativePosition() {
+	public void testNValueEmpty() {
 		int priorCursorPosition = 1;
 		String priorValue = "qwerty";
-		String newValue = "qwe";
+		String newValue = "";
 		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
 		int expected = 0;
 
 		assertEquals(expected, actual);
 	}
-
-	@Test
-	/*
-	 * Method - calculate
-	 */
-	public void test7() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	/*
-	 * Method - calculate
-	 */
-	public void test8() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	/*
-	 * Method - calculate
-	 */
-	public void test9() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	/*
-	 * Method - calculate
-	 */
-	public void test10() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	/*
-	 * Method - calculate
-	 */
-	public void test11() {
-		fail("Not yet implemented");
-	}
-
 }
