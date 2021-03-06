@@ -85,7 +85,7 @@ public class StringsTest {
 		int insertAt = 10;
 		Strings.insertPaddedIfNeeded(s, insertAt, stringToInsert);
 	}
-	
+
 	@Test
 	/*
 	 * Method - insertPaddedIfNeeded
@@ -107,7 +107,7 @@ public class StringsTest {
 	/*
 	 * method - isBlank
 	 */
-	public void testStringIsNull() {
+	public void testBlankMethodStringIsNull() {
 		String s = null;
 		assertTrue(Strings.isBlank(s));
 	}
@@ -116,7 +116,7 @@ public class StringsTest {
 	/*
 	 * method - isBlank
 	 */
-	public void testStringIsEmpty() {
+	public void testBlankMethodStringIsEmpty() {
 		String s = "";
 		assertTrue(Strings.isBlank(s));
 	}
@@ -125,7 +125,7 @@ public class StringsTest {
 	/*
 	 * method - isBlank
 	 */
-	public void testStringIsBlankCharSeq() {
+	public void testBlankMethodStringIsBlankCharSeq() {
 		String s = "          ";
 		assertTrue(Strings.isBlank(s));
 	}
@@ -134,7 +134,7 @@ public class StringsTest {
 	/*
 	 * method - isBlank
 	 */
-	public void testStringIsNormal() {
+	public void testBlankMethodStringIsNormal() {
 		String s = "qwerty";
 		assertFalse(Strings.isBlank(s));
 	}
@@ -216,7 +216,7 @@ public class StringsTest {
 		int insertAt = 10;
 		Strings.insertPadded(s, insertAt, stringToInsert);
 	}
-	
+
 	@Test
 	/*
 	 * Method - insertPadded
@@ -228,5 +228,45 @@ public class StringsTest {
 		String expected = "ccc";
 		String actual = Strings.insertPadded(s, insertAt, stringToInsert);
 		assertEquals(expected, actual);
+	}
+
+	//----------------------------------------------------------------------------------------------------------
+	//--------------------------------------------isEmptyOrNull()-----------------------------------------------
+	//----------------------------------------------------------------------------------------------------------
+
+	@Test
+	/*
+	 * Method - isEmptyOrNull
+	 */
+	public void testEmptyOrNullMethodStringIsNull() {
+		String s = null;
+		assertTrue(Strings.isEmptyOrNull(s));
+	}
+	
+	@Test
+	/*
+	 * Method - isEmptyOrNull
+	 */
+	public void testEmptyOrNullMethodStringIsEmpty() {
+		String s = "";
+		assertTrue(Strings.isEmptyOrNull(s));
+	}
+	
+	@Test
+	/*
+	 * Method - isEmptyOrNull
+	 */
+	public void testEmptyOrNullMethodStringIsBlankSeq() {
+		String s = "       ";
+		assertFalse(Strings.isEmptyOrNull(s));
+	}
+	
+	@Test
+	/*
+	 * Method - isEmptyOrNull
+	 */
+	public void testEmptyOrNullMethodStringIsNormal() {
+		String s = "qwerty";
+		assertFalse(Strings.isEmptyOrNull(s));
 	}
 }
