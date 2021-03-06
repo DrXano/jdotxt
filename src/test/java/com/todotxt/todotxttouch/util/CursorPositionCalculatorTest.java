@@ -87,8 +87,8 @@ public class CursorPositionCalculatorTest {
 		String priorValue = null;
 		String newValue = null;
 		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
-
-		assertFalse(actual >= 0);
+		int expected = 0;
+		assertEquals(expected, actual);
 	}
 	
 
