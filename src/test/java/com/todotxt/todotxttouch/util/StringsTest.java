@@ -4,9 +4,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class StringsTest {
+	
+	private String s;
+	private String stringToInsert;
+	
+	@Before
+	public void setUp() {
+		s = "qwerty";
+		stringToInsert = "abc";
+	}
 
 	//----------------------------------------------------------------------------------------------------------
 	//------------------------------------------insertPaddedIfNeeded()------------------------------------------
@@ -268,5 +278,76 @@ public class StringsTest {
 	public void testEmptyOrNullMethodStringIsNormal() {
 		String s = "qwerty";
 		assertFalse(Strings.isEmptyOrNull(s));
+	}
+	
+	//-----------------------------------Boundary Value Analysis--------------------------------------
+	
+	@Test
+	/*
+	 * Method - insertPadded
+	 */
+	public void test1() {
+		int insertAt = 0;
+		String expected = "abc qwerty";
+		String actual = Strings.insertPadded(s, insertAt, stringToInsert);
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	/*
+	 * Method - insertPadded
+	 */
+	public void test2() {
+		int insertAt = 6;
+		String expected = "qwerty abc";
+		String actual = Strings.insertPadded(s, insertAt, stringToInsert);
+		assertEquals(expected, actual);
+	}
+	
+	@Test(expected = IndexOutOfBoundsException.class)
+	/*
+	 * Method - insertPadded
+	 */
+	public void test3() {
+		int insertAt = -1;
+		Strings.insertPadded(s, insertAt, stringToInsert);
+	}
+	
+	@Test(expected = IndexOutOfBoundsException.class)
+	/*
+	 * Method - insertPadded
+	 */
+	public void test4() {
+		int insertAt = 7;
+		Strings.insertPadded(s, insertAt, stringToInsert);
+	}
+	
+	@Test(expected = IndexOutOfBoundsException.class)
+	/*
+	 * Method - insertPadded
+	 */
+	public void test5() {
+		int insertAt = -5;
+		Strings.insertPadded(s, insertAt, stringToInsert);
+	}
+	
+	@Test
+	/*
+	 * Method - insertPadded
+	 */
+	public void test6() {
+		int insertAt = 3;
+		String expected = "qwe abc rty";
+		String actual = Strings.insertPadded(s, insertAt, stringToInsert);
+		assertEquals(expected, actual);
+	}
+
+	@Test(expected = IndexOutOfBoundsException.class)
+	/*
+	 * Method - insertPadded
+	 */
+	public void test7() {
+		int insertAt = 9;
+		Strings.insertPadded(s, insertAt, stringToInsert);
 	}
 }
