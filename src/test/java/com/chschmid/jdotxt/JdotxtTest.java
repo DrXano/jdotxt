@@ -10,7 +10,7 @@ public class JdotxtTest {
 	/*
 	 * Method - insertReplaceString
 	 */
-	public void test1() {
+	public void testOffsetZeroG() {
 		int offset = 0;
 		String original = "qwerty";
 		String replace = "man";
@@ -23,7 +23,7 @@ public class JdotxtTest {
 	/*
 	 * Method - insertReplaceString
 	 */
-	public void test2() {
+	public void testOffsetZeroL() {
 		int offset = 0;
 		String original = "qwerty";
 		String replace = "abcdefgh";
@@ -38,7 +38,7 @@ public class JdotxtTest {
 	/*
 	 * Method - insertReplaceString
 	 */
-	public void testA() {
+	public void testOffsetZeroE() {
 		int offset = 0;
 		String original = "qwerty";
 		String replace = "abcdef";
@@ -52,7 +52,7 @@ public class JdotxtTest {
 	/*
 	 * Method - insertReplaceString
 	 */
-	public void test3() {
+	public void testOffsetLenMOneG() {
 		int offset = 5;
 		String original = "qwerty";
 		String replace = "";
@@ -65,7 +65,7 @@ public class JdotxtTest {
 	/*
 	 * Method - insertReplaceString
 	 */
-	public void test4() {
+	public void testOffsetLenMOneL() {
 		int offset = 5;
 		String original = "qwerty";
 		String replace = "man";
@@ -78,7 +78,7 @@ public class JdotxtTest {
 	/*
 	 * Method - insertReplaceString
 	 */
-	public void testB() {
+	public void testOffsetLenMOneE() {
 		int offset = 3;
 		String original = "qwerty";
 		String replace = "man";
@@ -91,7 +91,7 @@ public class JdotxtTest {
 	/*
 	 * Method - insertReplaceString
 	 */
-	public void test5() {
+	public void testOffsetMOne() {
 		int offset = -1;
 		String original = "qwerty";
 		String replace = "man";
@@ -104,7 +104,7 @@ public class JdotxtTest {
 	/*
 	 * Method - insertReplaceString
 	 */
-	public void test6() {
+	public void testOffsetLen() {
 		int offset = 6;
 		String original = "qwerty";
 		String replace = "man";
@@ -117,7 +117,7 @@ public class JdotxtTest {
 	/*
 	 * Method - insertReplaceString
 	 */
-	public void test7() {
+	public void testOffsetPart1() {
 		int offset = -5;
 		String original = "qwerty";
 		String replace = "man";
@@ -130,7 +130,7 @@ public class JdotxtTest {
 	/*
 	 * Method - insertReplaceString
 	 */
-	public void test8() {
+	public void testOffsetPart6L() {
 		int offset = 2;
 		String original = "qwerty";
 		String replace = "man";
@@ -143,7 +143,7 @@ public class JdotxtTest {
 	/*
 	 * Method - insertReplaceString
 	 */
-	public void test9() {
+	public void testOffsetPart6E() {
 		int offset = 2;
 		String original = "qwerty";
 		String replace = "mens";
@@ -156,7 +156,7 @@ public class JdotxtTest {
 	/*
 	 * Method - insertReplaceString
 	 */
-	public void testC() {
+	public void testOffsetPart7() {
 		int offset = 3;
 		String original = "qwerty";
 		String replace = "mens";
@@ -169,7 +169,7 @@ public class JdotxtTest {
 	/*
 	 * Method - insertReplaceString
 	 */
-	public void test10() {
+	public void testOffsetPart3() {
 		int offset = 10;
 		String original = "qwerty";
 		String replace = "man";

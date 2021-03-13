@@ -286,7 +286,7 @@ public class StringsTest {
 	/*
 	 * Method - insertPadded
 	 */
-	public void test1() {
+	public void testInsertAtZero() {
 		int insertAt = 0;
 		String expected = "abc qwerty";
 		String actual = Strings.insertPadded(s, insertAt, stringToInsert);
@@ -297,7 +297,7 @@ public class StringsTest {
 	/*
 	 * Method - insertPadded
 	 */
-	public void test2() {
+	public void testInsertAtSLength() {
 		int insertAt = 6;
 		String expected = "qwerty abc";
 		String actual = Strings.insertPadded(s, insertAt, stringToInsert);
@@ -308,7 +308,7 @@ public class StringsTest {
 	/*
 	 * Method - insertPadded
 	 */
-	public void test3() {
+	public void testInsertAtNOne() {
 		int insertAt = -1;
 		Strings.insertPadded(s, insertAt, stringToInsert);
 	}
@@ -317,7 +317,7 @@ public class StringsTest {
 	/*
 	 * Method - insertPadded
 	 */
-	public void test4() {
+	public void testInsertAtSLengthPOne() {
 		int insertAt = 7;
 		Strings.insertPadded(s, insertAt, stringToInsert);
 	}
@@ -326,7 +326,7 @@ public class StringsTest {
 	/*
 	 * Method - insertPadded
 	 */
-	public void test5() {
+	public void testInsertAtPart1() {
 		int insertAt = -5;
 		Strings.insertPadded(s, insertAt, stringToInsert);
 	}
@@ -335,7 +335,7 @@ public class StringsTest {
 	/*
 	 * Method - insertPadded
 	 */
-	public void test6() {
+	public void testInsertAtPart2() {
 		int insertAt = 3;
 		String expected = "qwe abc rty";
 		String actual = Strings.insertPadded(s, insertAt, stringToInsert);
@@ -346,7 +346,7 @@ public class StringsTest {
 	/*
 	 * Method - insertPadded
 	 */
-	public void test7() {
+	public void testInsertAtPart3() {
 		int insertAt = 9;
 		Strings.insertPadded(s, insertAt, stringToInsert);
 	}

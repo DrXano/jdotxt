@@ -135,7 +135,7 @@ public class CursorPositionCalculatorTest {
 	/*
 	 * Method - calculate
 	 */
-	public void AtestA() {
+	public void testCursorZero() {
 		int priorCursorPosition = 0;
 		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
 		int expected = 3;
@@ -147,7 +147,7 @@ public class CursorPositionCalculatorTest {
 	/*
 	 * Method - calculate
 	 */
-	public void BtestB() {
+	public void testCursorNOne() {
 		int priorCursorPosition = 2;
 		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
 		int expected = 5;
@@ -159,7 +159,7 @@ public class CursorPositionCalculatorTest {
 	/*
 	 * Method - calculate
 	 */
-	public void CtestC() {
+	public void testCursorLenMOne() {
 		int priorCursorPosition = -1;
 		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
 		int expected = 3;
@@ -171,7 +171,7 @@ public class CursorPositionCalculatorTest {
 	/*
 	 * Method - calculate
 	 */
-	public void DtestD() {
+	public void testCursorLen() {
 		int priorCursorPosition = 3;
 		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
 		int expected = 6;
@@ -183,7 +183,7 @@ public class CursorPositionCalculatorTest {
 	/*
 	 * Method - calculate
 	 */
-	public void EtestE() {
+	public void testCursorPart1() {
 		int priorCursorPosition = -3;
 		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
 		int expected = 3;
@@ -195,7 +195,7 @@ public class CursorPositionCalculatorTest {
 	/*
 	 * Method - calculate
 	 */
-	public void FtestF() {
+	public void testCursorPart2() {
 		int priorCursorPosition = 1;
 		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
 		int expected = 4;
@@ -207,7 +207,7 @@ public class CursorPositionCalculatorTest {
 	/*
 	 * Method - calculate
 	 */
-	public void GtestG() {
+	public void testCursorPart3() {
 		int priorCursorPosition = 5;
 		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, newValue);
 		int expected = 6;
@@ -219,7 +219,7 @@ public class CursorPositionCalculatorTest {
 	/*
 	 * Method - calculate
 	 */
-	public void HtestH() {
+	public void testPriorValueNull () {
 		int priorCursorPosition = 1;
 		int actual = CursorPositionCalculator.calculate(priorCursorPosition, null, newValue);
 		int expected = 6;
@@ -231,7 +231,7 @@ public class CursorPositionCalculatorTest {
 	/*
 	 * Method - calculate
 	 */
-	public void ItestI() {
+	public void testNewValueNull() {
 		int priorCursorPosition = 1;
 		int actual = CursorPositionCalculator.calculate(priorCursorPosition, priorValue, null);
 		int expected = 0;
