@@ -1,7 +1,6 @@
 package com.todotxt.todotxttouch.task;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
@@ -36,9 +35,9 @@ public class LocalFileTaskRepositoryTest {
 	@Test
 	public void testStoredTodoTasks() {
 		ArrayList<Task> tasks = new ArrayList<>();
-		tasks.add(new Task(1, "task1"));
-		tasks.add(new Task(2, "task2"));
-		tasks.add(new Task(3, "task3"));
+		tasks.add(new Task(0, "task1"));
+		tasks.add(new Task(1, "task2"));
+		tasks.add(new Task(2, "task3"));
 		repo.store(tasks);
 		ArrayList<Task> expected = tasks;
 		ArrayList<Task> actual = repo.load();
@@ -49,9 +48,9 @@ public class LocalFileTaskRepositoryTest {
 	@Test
 	public void testStoredDoneTasks() {
 		ArrayList<Task> tasks = new ArrayList<>();
-		tasks.add(new Task(1, "task1"));
-		tasks.add(new Task(2, "task2"));
-		tasks.add(new Task(3, "task3"));
+		tasks.add(new Task(0, "task1"));
+		tasks.add(new Task(1, "task2"));
+		tasks.add(new Task(2, "task3"));
 		repo.storeDoneTasks(tasks);
 		ArrayList<Task> expected = tasks;
 		ArrayList<Task> actual = repo.loadDoneTasks();
@@ -62,23 +61,23 @@ public class LocalFileTaskRepositoryTest {
 	@Test
 	public void testArchivedTodoTasks() {
 		ArrayList<Task> tasks = new ArrayList<>();
-		tasks.add(new Task(1, "task1"));
-		tasks.add(new Task(2, "task2"));
-		tasks.add(new Task(3, "task3"));
+		tasks.add(new Task(0, "task1"));
+		tasks.add(new Task(1, "task2"));
+		tasks.add(new Task(2, "task3"));
 		tasks.get(0).markComplete(new Date());
 		tasks.get(1).markIncomplete();
 		tasks.get(2).markComplete(new Date());
 		repo.archive(tasks);
 		ArrayList<Task> loaded = repo.load();
-		assertEquals(tasks.get(1),loaded.get(0));
+		assertEquals(tasks.get(1).getText(),loaded.get(0).getText());
 	}
 	
 	@Test
 	public void testArchivedDoneTasks() {
 		ArrayList<Task> tasks = new ArrayList<>();
-		tasks.add(new Task(1, "task1"));
-		tasks.add(new Task(2, "task2"));
-		tasks.add(new Task(3, "task3"));
+		tasks.add(new Task(0, "task1"));
+		tasks.add(new Task(1, "task2"));
+		tasks.add(new Task(2, "task3"));
 		tasks.get(0).markComplete(new Date());
 		tasks.get(1).markIncomplete();
 		tasks.get(2).markIncomplete();
@@ -91,7 +90,8 @@ public class LocalFileTaskRepositoryTest {
 	public void testTodoFileModifiedSince() {
 		LocalDate ld = LocalDate.of(2020, 1, 1);
 		Date d = Date.from(ld.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		assertFalse(repo.todoFileModifiedSince(d));
+		//Date d = java.sql.Date.valueOf(ld);
+		assertTrue(repo.todoFileModifiedSince(d));
 	}
 	
 	@Test
