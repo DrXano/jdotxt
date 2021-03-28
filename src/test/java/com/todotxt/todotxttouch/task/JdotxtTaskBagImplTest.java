@@ -409,6 +409,45 @@ public class JdotxtTaskBagImplTest {
 		assertEquals(expected,actual);
 		bag.clear();
 	}
+	
+	//TODO: Para escrever no relatorio
+	@Test
+	public void testBagFilterByPriorityWithNothing() {
+		Task t1 = new Task(0, "t1", new Date());
+		Task t2 = new Task(1, "t2", new Date());
+		Task t3 = new Task(2, "t3", new Date());
+		Task t4 = new Task(3, "t4", new Date());
+		Task t5 = new Task(4, "t5", new Date());
+		Task t6 = new Task(5, "t6", new Date());
+
+		t1.setPriority(Priority.B);
+		t2.setPriority(Priority.A);
+		t3.setPriority(Priority.A);
+		t4.setPriority(Priority.E);
+		t5.setPriority(Priority.C);
+		t6.setPriority(Priority.F);
+
+		bag.addAsTask(t1.inFileFormat());
+		bag.addAsTask(t2.inFileFormat());
+		bag.addAsTask(t3.inFileFormat());
+		bag.addAsTask(t4.inFileFormat());
+		bag.addAsTask(t5.inFileFormat());
+		bag.addAsTask(t6.inFileFormat());
+
+
+		List<Task> expected = new ArrayList<>();
+		expected.add(t1);
+		expected.add(t2);
+		expected.add(t3);
+		expected.add(t4);
+		expected.add(t5);
+		expected.add(t6);
+
+		List<Task> actual = bag.getTasks(new ByPriorityFilter(null), Sorters.ID.ascending());
+
+		assertEquals(expected,actual);
+		bag.clear();
+	}
 
 	@Test
 	public void testBagFilterByContext() {
@@ -439,7 +478,69 @@ public class JdotxtTaskBagImplTest {
 		assertEquals(expected,actual);
 		bag.clear();
 	}
-	
+
+	//TODO: Para escrever no relatorio
+	@Test
+	public void testBagFilterByContextWithNothing() {
+		Task t1 = new Task(0, "t1 @Cont1", new Date());
+		Task t2 = new Task(1, "t2 @Cont2", new Date());
+		Task t3 = new Task(2, "t3 @Cont1", new Date());
+		Task t4 = new Task(3, "t4 @Cont1 @Cont2", new Date());
+		Task t5 = new Task(4, "t5 @Cont3", new Date());
+		Task t6 = new Task(5, "t6 @Cont4", new Date());
+
+		bag.addAsTask(t1.inFileFormat());
+		bag.addAsTask(t2.inFileFormat());
+		bag.addAsTask(t3.inFileFormat());
+		bag.addAsTask(t4.inFileFormat());
+		bag.addAsTask(t5.inFileFormat());
+		bag.addAsTask(t6.inFileFormat());
+
+		List<Task> expected = new ArrayList<>();
+		expected.add(t1);
+		expected.add(t2);
+		expected.add(t3);
+		expected.add(t4);
+		expected.add(t5);
+		expected.add(t6);
+
+		List<Task> actual = bag.getTasks(new ByContextFilter(null), null);
+
+		assertEquals(expected,actual);
+		bag.clear();
+	}
+
+
+	//TODO: Para escrever no relatorio
+	@Test
+	public void testBagFilterByContextWithNoContext() {
+		Task t1 = new Task(0, "t1", new Date());
+		Task t2 = new Task(1, "t2 @Cont2", new Date());
+		Task t3 = new Task(2, "t3 @Cont1", new Date());
+		Task t4 = new Task(3, "t4 @Cont1 @Cont2", new Date());
+		Task t5 = new Task(4, "t5 @Cont3", new Date());
+		Task t6 = new Task(5, "t6", new Date());
+
+		bag.addAsTask(t1.inFileFormat());
+		bag.addAsTask(t2.inFileFormat());
+		bag.addAsTask(t3.inFileFormat());
+		bag.addAsTask(t4.inFileFormat());
+		bag.addAsTask(t5.inFileFormat());
+		bag.addAsTask(t6.inFileFormat());
+
+		List<Task> expected = new ArrayList<>();
+		expected.add(t1);
+		expected.add(t6);
+
+		List<String> ctxts = new ArrayList<>();
+		ctxts.add("-");
+
+		List<Task> actual = bag.getTasks(new ByContextFilter(ctxts), null);
+
+		assertEquals(expected,actual);
+		bag.clear();
+	}
+
 	@Test
 	public void testBagFilterByProject() {
 		Task t1 = new Task(0, "t1 +P1", new Date());
@@ -469,6 +570,67 @@ public class JdotxtTaskBagImplTest {
 		bag.clear();
 	}
 	
+	//TODO: Para escrever no relatorio
+	@Test
+	public void testBagFilterByProjectWithNothing() {
+		Task t1 = new Task(0, "t1 +P1", new Date());
+		Task t2 = new Task(1, "t2 +P2", new Date());
+		Task t3 = new Task(2, "t3 +P3", new Date());
+		Task t4 = new Task(3, "t4 +P2 +P3", new Date());
+		Task t5 = new Task(4, "t5 +P4", new Date());
+		Task t6 = new Task(5, "t6 +P4", new Date());
+
+		bag.addAsTask(t1.inFileFormat());
+		bag.addAsTask(t2.inFileFormat());
+		bag.addAsTask(t3.inFileFormat());
+		bag.addAsTask(t4.inFileFormat());
+		bag.addAsTask(t5.inFileFormat());
+		bag.addAsTask(t6.inFileFormat());
+
+		List<Task> expected = new ArrayList<>();
+		expected.add(t1);
+		expected.add(t2);
+		expected.add(t3);
+		expected.add(t4);
+		expected.add(t5);
+		expected.add(t6);
+
+		List<Task> actual = bag.getTasks(new ByProjectFilter(null), null);
+
+		assertEquals(expected,actual);
+		bag.clear();
+	}
+	
+	//TODO: Para escrever no relatorio
+	@Test
+	public void testBagFilterByProjectWithNoProjects() {
+		Task t1 = new Task(0, "t1 +P1", new Date());
+		Task t2 = new Task(1, "t2", new Date());
+		Task t3 = new Task(2, "t3", new Date());
+		Task t4 = new Task(3, "t4 +P2 +P3", new Date());
+		Task t5 = new Task(4, "t5 +P4", new Date());
+		Task t6 = new Task(5, "t6 +P4", new Date());
+
+		bag.addAsTask(t1.inFileFormat());
+		bag.addAsTask(t2.inFileFormat());
+		bag.addAsTask(t3.inFileFormat());
+		bag.addAsTask(t4.inFileFormat());
+		bag.addAsTask(t5.inFileFormat());
+		bag.addAsTask(t6.inFileFormat());
+
+		List<Task> expected = new ArrayList<>();
+		expected.add(t2);
+		expected.add(t3);
+		
+		List<String> projs = new ArrayList<>();
+		projs.add("-");
+
+		List<Task> actual = bag.getTasks(new ByProjectFilter(projs), null);
+
+		assertEquals(expected,actual);
+		bag.clear();
+	}
+
 	@Test
 	public void testBagFilterByTestWithCaseSensitive() {
 		Task t1 = new Task(0, "fazer uma coisa", new Date());
@@ -490,13 +652,13 @@ public class JdotxtTaskBagImplTest {
 
 		String filterText = "faZer";
 		boolean caseSensitive = true;
-		
+
 		List<Task> actual = bag.getTasks(FilterFactory.generateAndFilter(new ArrayList<Priority>(), new ArrayList<String>(), new ArrayList<String>(), filterText, caseSensitive, true, true), null);
 
 		assertEquals(expected,actual);
 		bag.clear();
 	}
-	
+
 	@Test
 	public void testBagFilterByTestWithOutCaseSensitive() {
 		Task t1 = new Task(0, "fazer uma coisa", new Date());
@@ -520,8 +682,38 @@ public class JdotxtTaskBagImplTest {
 
 		String filterText = "faZer";
 		boolean caseSensitive = false;
-		
+
 		List<Task> actual = bag.getTasks(FilterFactory.generateAndFilter(new ArrayList<Priority>(), new ArrayList<String>(), new ArrayList<String>(), filterText, caseSensitive, true, true), null);
+
+		assertEquals(expected,actual);
+		bag.clear();
+	}
+	
+	//TODO: Para escrever no relatorio
+	@Test
+	public void testBagFilterByTest() {
+		Task t1 = new Task(0, "fazer uma coisa", new Date());
+		Task t2 = new Task(1, "faZer outra coisa", new Date());
+		Task t3 = new Task(2, "fazer ainda outra coisa", new Date());
+		Task t4 = new Task(3, "Mandar um mail", new Date());
+		Task t5 = new Task(4, "Almoçar", new Date());
+		Task t6 = new Task(5, "Mandar mais um mail", new Date());
+
+		bag.addAsTask(t1.inFileFormat());
+		bag.addAsTask(t2.inFileFormat());
+		bag.addAsTask(t3.inFileFormat());
+		bag.addAsTask(t4.inFileFormat());
+		bag.addAsTask(t5.inFileFormat());
+		bag.addAsTask(t6.inFileFormat());
+
+		List<Task> expected = new ArrayList<>();
+		expected.add(t1);
+		expected.add(t2);
+		expected.add(t3);
+		expected.add(t4);
+		expected.add(t5);
+		expected.add(t6);
+		List<Task> actual = bag.getTasks(new ByTextFilter(null, true), null);
 
 		assertEquals(expected,actual);
 		bag.clear();
@@ -542,7 +734,7 @@ public class JdotxtTaskBagImplTest {
 		bag.addAsTask(t4.inFileFormat());
 		bag.addAsTask(t5.inFileFormat());
 		bag.addAsTask(t6.inFileFormat());
-		
+
 
 		List<Task> expected = new ArrayList<>();
 		expected.add(t1);
@@ -554,7 +746,7 @@ public class JdotxtTaskBagImplTest {
 		assertEquals(expected,actual);
 		bag.clear();
 	}
-	
+
 	@Test
 	public void testBagFilterByThreshold() {
 		Task t1 = new Task(0, "t1 t:2018-01-01", new Date());
@@ -570,7 +762,7 @@ public class JdotxtTaskBagImplTest {
 		bag.addAsTask(t4.inFileFormat());
 		bag.addAsTask(t5.inFileFormat());
 		bag.addAsTask(t6.inFileFormat());
-		
+
 		List<Task> expected = new ArrayList<>();
 		expected.add(t1);
 		expected.add(t2);
@@ -582,7 +774,7 @@ public class JdotxtTaskBagImplTest {
 		assertEquals(expected,actual);
 		bag.clear();
 	}
-	
+
 	@Test
 	public void testBagAndFilter() {
 		Task t1 = new Task(0, "t1 @C1 @C2 +P2", new Date());
@@ -598,13 +790,13 @@ public class JdotxtTaskBagImplTest {
 		bag.addAsTask(t4.inFileFormat());
 		bag.addAsTask(t5.inFileFormat());
 		bag.addAsTask(t6.inFileFormat());
-		
+
 		List<String> contexts = new ArrayList<>();
 		contexts.add("C2");
 
 		List<String> projects = new ArrayList<>();
 		projects.add("P2");
-		
+
 		AndFilter filter = new AndFilter();
 		filter.addFilter(new ByContextFilter(contexts));
 		filter.addFilter(new ByProjectFilter(projects));
@@ -612,13 +804,13 @@ public class JdotxtTaskBagImplTest {
 		List<Task> expected = new ArrayList<>();
 		expected.add(t1);
 		expected.add(t3);
-		
+
 		List<Task> actual = bag.getTasks(filter, Sorters.ID.ascending());
 
 		assertEquals(expected,actual);
 		bag.clear();
 	}
-	
+
 	@Test
 	public void testBagOrFilter() {
 		Task t1 = new Task(0, "t1 @C1 @C2 +P2", new Date());
@@ -634,13 +826,13 @@ public class JdotxtTaskBagImplTest {
 		bag.addAsTask(t4.inFileFormat());
 		bag.addAsTask(t5.inFileFormat());
 		bag.addAsTask(t6.inFileFormat());
-		
+
 		List<String> contexts = new ArrayList<>();
 		contexts.add("C2");
 
 		List<String> projects = new ArrayList<>();
 		projects.add("P2");
-		
+
 		OrFilter filter = new OrFilter();
 		filter.addFilter(new ByContextFilter(contexts));
 		filter.addFilter(new ByProjectFilter(projects));
@@ -650,7 +842,7 @@ public class JdotxtTaskBagImplTest {
 		expected.add(t3);
 		expected.add(t4);
 		expected.add(t5);
-		
+
 		List<Task> actual = bag.getTasks(filter, Sorters.ID.ascending());
 
 		assertEquals(expected,actual);

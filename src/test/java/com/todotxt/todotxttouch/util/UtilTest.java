@@ -26,8 +26,6 @@ import com.todotxt.todotxttouch.task.Task;
 public class UtilTest {
 	
 	final static String DEFAULTDIR = Jdotxt.DEFAULT_DIR;
-	private static File TODO_TXT_FILE = new File(DEFAULTDIR + File.separator + "todo.txt");
-	private static File DONE_TXT_FILE = new File(DEFAULTDIR + File.separator + "done.txt");
 
 	private ArrayList<Task> savedtodotasks;
 	private ArrayList<Task> saveddonetasks;
