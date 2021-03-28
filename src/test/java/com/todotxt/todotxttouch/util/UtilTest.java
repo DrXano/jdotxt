@@ -3,20 +3,55 @@ package com.todotxt.todotxttouch.util;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
+import com.chschmid.jdotxt.Jdotxt;
 import com.todotxt.todotxttouch.TodoException;
+import com.todotxt.todotxttouch.task.LocalFileTaskRepository;
+import com.todotxt.todotxttouch.task.Task;
 
 public class UtilTest {
+	
+	final static String DEFAULTDIR = Jdotxt.DEFAULT_DIR;
+	private static File TODO_TXT_FILE = new File(DEFAULTDIR + File.separator + "todo.txt");
+	private static File DONE_TXT_FILE = new File(DEFAULTDIR + File.separator + "done.txt");
+
+	private ArrayList<Task> savedtodotasks;
+	private ArrayList<Task> saveddonetasks;
+	private LocalFileTaskRepository savedRepo;
+
+	@Before
+	public void setUp() throws Exception {
+
+		/*
+		Preferences userPrefs = Preferences.userNodeForPackage(Jdotxt.class);
+		JdotxtGUI.lang = new LanguagesController(userPrefs.get("lang", "English"));
+		*/
+
+		savedRepo = new LocalFileTaskRepository();
+		savedtodotasks = savedRepo.load();
+		saveddonetasks = savedRepo.loadDoneTasks();
+		savedRepo.purge();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		savedRepo.store(savedtodotasks);
+		savedRepo.storeDoneTasks(saveddonetasks);
+	}
 
 	@Test
 	public void testReadStreamNullStream() {
@@ -156,6 +191,73 @@ public class UtilTest {
 		int[] actual = Util.integerList2IntArray(list);
 
 		assertArrayEquals(expected, actual);
+	}
+	
+	@Test(expected = TodoException.class)
+	public void testRenameFile1() throws IOException {
+		File origFile = new File(DEFAULTDIR + File.separator + "origFile.txt");
+		File newFile = new File(DEFAULTDIR + File.separator + "newFile.txt");
+		origFile.createNewFile();
+		newFile.createNewFile();
+		Util.renameFile(origFile, newFile,false);
+		origFile.delete();
+		newFile.delete();
+	}
+	
+	@Test
+	public void testRenameFile2() throws IOException {
+		File origFile = new File(DEFAULTDIR + File.separator + "origFile.txt");
+		File newFile = new File(DEFAULTDIR + File.separator + "newFile.txt");
+		origFile.createNewFile();
+		newFile.createNewFile();
+		Util.renameFile(origFile, newFile,true);
+		assertTrue(!origFile.exists() && newFile.exists());
+		origFile.delete();
+		newFile.delete();
+	}
+	
+	@Test
+	public void testRenameFile3() throws IOException {
+		File origFile = new File(DEFAULTDIR + File.separator + "origFile.txt");
+		File newFile = new File(DEFAULTDIR + File.separator + "newFile.txt");
+		origFile.createNewFile();
+		Util.renameFile(origFile, newFile,true);
+		assertTrue(!origFile.exists() && newFile.exists());
+		origFile.delete();
+		newFile.delete();
+	}
+	
+	@Test(expected = TodoException.class)
+	public void testRenameFile4() throws IOException {
+		File origFile = new File(DEFAULTDIR + File.separator + "origFile.txt");
+		File newFile = new File(DEFAULTDIR + File.separator + "newFile.txt");
+		Util.renameFile(origFile, newFile,true);
+		origFile.delete();
+		newFile.delete();
+	}
+	
+	@Test(expected = TodoException.class)
+	public void testcopyFile1() throws IOException {
+		File origFile = new File(DEFAULTDIR + File.separator + "origFile.txt");
+		File newFile = new File(DEFAULTDIR + File.separator + "newFile.txt");
+		origFile.createNewFile();
+		newFile.createNewFile();
+		Util.copyFile(origFile, newFile, false);
+		origFile.delete();
+		newFile.delete();
+	}
+	
+	@Test
+	public void testcopyFile2() throws IOException {
+		File origFile = new File(DEFAULTDIR + File.separator + "origFile.txt");
+		File newFile = new File(DEFAULTDIR + File.separator + "newFile.txt");
+		origFile.createNewFile();
+		newFile.createNewFile();
+		populate(origFile);
+		Util.copyFile(origFile, newFile, true);
+		assertArrayEquals(Files.readAllBytes(newFile.toPath()),Files.readAllBytes(origFile.toPath()));
+		origFile.delete();
+		newFile.delete();
 	}
 	
 	private void populate(File f) throws IOException {
