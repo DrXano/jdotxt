@@ -348,14 +348,13 @@ public class SortersTest {
 		t2.markComplete(getaDate(2));
 		t4.markComplete(getaDate(1));		
 		
-		//Eu aqui tou a assumir que as tarefas que foram concluidas aparecem primeiro e depois vêem as que ainda estão por fazer
 		ArrayList<Task> expected = new ArrayList<>();
-		expected.add(t4);
-		expected.add(t2);
 		expected.add(t1);
 		expected.add(t3);
 		expected.add(t5);
 		expected.add(t6);
+		expected.add(t4);
+		expected.add(t2);
 		
 		ArrayList<Task> actual = new ArrayList<>();
 		actual.add(t1);
