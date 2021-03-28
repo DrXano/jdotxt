@@ -18,13 +18,14 @@ import com.chschmid.jdotxt.Jdotxt;
 import com.chschmid.jdotxt.gui.JdotxtGUI;
 import com.chschmid.jdotxt.util.LanguagesController;
 import com.todotxt.todotxttouch.task.sorter.Sorters;
+import com.todotxt.todotxttouch.task.sorter.Sorters;
 
-public class JdotxtTaskBagImplTest {
+public class TaskBagImplTest {
 
 	private ArrayList<Task> savedtodotasks;
 	private ArrayList<Task> saveddonetasks;
 	private LocalFileTaskRepository savedRepo;
-	private JdotxtTaskBagImpl bag;
+	private TaskBagImpl bag;
 
 	@Before
 	public void setUp() throws Exception {
@@ -36,7 +37,7 @@ public class JdotxtTaskBagImplTest {
 		savedtodotasks = savedRepo.load();
 		saveddonetasks = savedRepo.loadDoneTasks();
 		savedRepo.purge();
-		bag = (JdotxtTaskBagImpl) TaskBagFactory.getTaskBag();
+		bag = new TaskBagImpl(new LocalFileTaskRepository());
 		bag.clear();
 	}
 
@@ -375,7 +376,7 @@ public class JdotxtTaskBagImplTest {
 	}
 
 	@Test
-	public void testBagFilterByPriority() {
+	public void testBagFilter1() {
 		Task t1 = new Task(0, "t1", new Date());
 		Task t2 = new Task(1, "t2", new Date());
 		Task t3 = new Task(2, "t3", new Date());
@@ -411,7 +412,7 @@ public class JdotxtTaskBagImplTest {
 	}
 
 	@Test
-	public void testBagFilterByContext() {
+	public void testBagFilter2() {
 		Task t1 = new Task(0, "t1 @Cont1", new Date());
 		Task t2 = new Task(1, "t2 @Cont2", new Date());
 		Task t3 = new Task(2, "t3 @Cont1", new Date());
@@ -434,226 +435,11 @@ public class JdotxtTaskBagImplTest {
 		expected.add(t3);
 		expected.add(t4);
 
-		List<Task> actual = bag.getTasks(FilterFactory.generateAndFilter(new ArrayList<Priority>(), contexts, new ArrayList<String>(), null, false, true, true), null);
+		List<Task> actual = bag.getTasks(FilterFactory.generateAndFilter(new ArrayList<Priority>(), contexts, new ArrayList<String>(), null, false, true, true), Sorters.ID.ascending());
 
 		assertEquals(expected,actual);
 		bag.clear();
 	}
 	
-	@Test
-	public void testBagFilterByProject() {
-		Task t1 = new Task(0, "t1 +P1", new Date());
-		Task t2 = new Task(1, "t2 +P2", new Date());
-		Task t3 = new Task(2, "t3 +P3", new Date());
-		Task t4 = new Task(3, "t4 +P2 +P3", new Date());
-		Task t5 = new Task(4, "t5 +P4", new Date());
-		Task t6 = new Task(5, "t6 +P4", new Date());
 
-		bag.addAsTask(t1.inFileFormat());
-		bag.addAsTask(t2.inFileFormat());
-		bag.addAsTask(t3.inFileFormat());
-		bag.addAsTask(t4.inFileFormat());
-		bag.addAsTask(t5.inFileFormat());
-		bag.addAsTask(t6.inFileFormat());
-
-		List<String> projects = new ArrayList<>();
-		projects.add("P2");
-
-		List<Task> expected = new ArrayList<>();
-		expected.add(t2);
-		expected.add(t4);
-
-		List<Task> actual = bag.getTasks(FilterFactory.generateAndFilter(new ArrayList<Priority>(), new ArrayList<String>(), projects, null, false, true, true), null);
-
-		assertEquals(expected,actual);
-		bag.clear();
-	}
-	
-	@Test
-	public void testBagFilterByTestWithCaseSensitive() {
-		Task t1 = new Task(0, "fazer uma coisa", new Date());
-		Task t2 = new Task(1, "faZer outra coisa", new Date());
-		Task t3 = new Task(2, "fazer ainda outra coisa", new Date());
-		Task t4 = new Task(3, "Mandar um mail", new Date());
-		Task t5 = new Task(4, "Almoçar", new Date());
-		Task t6 = new Task(5, "Mandar mais um mail", new Date());
-
-		bag.addAsTask(t1.inFileFormat());
-		bag.addAsTask(t2.inFileFormat());
-		bag.addAsTask(t3.inFileFormat());
-		bag.addAsTask(t4.inFileFormat());
-		bag.addAsTask(t5.inFileFormat());
-		bag.addAsTask(t6.inFileFormat());
-
-		List<Task> expected = new ArrayList<>();
-		expected.add(t2);
-
-		String filterText = "faZer";
-		boolean caseSensitive = true;
-		
-		List<Task> actual = bag.getTasks(FilterFactory.generateAndFilter(new ArrayList<Priority>(), new ArrayList<String>(), new ArrayList<String>(), filterText, caseSensitive, true, true), null);
-
-		assertEquals(expected,actual);
-		bag.clear();
-	}
-	
-	@Test
-	public void testBagFilterByTestWithOutCaseSensitive() {
-		Task t1 = new Task(0, "fazer uma coisa", new Date());
-		Task t2 = new Task(1, "faZer outra coisa", new Date());
-		Task t3 = new Task(2, "fazer ainda outra coisa", new Date());
-		Task t4 = new Task(3, "Mandar um mail", new Date());
-		Task t5 = new Task(4, "Almoçar", new Date());
-		Task t6 = new Task(5, "Mandar mais um mail", new Date());
-
-		bag.addAsTask(t1.inFileFormat());
-		bag.addAsTask(t2.inFileFormat());
-		bag.addAsTask(t3.inFileFormat());
-		bag.addAsTask(t4.inFileFormat());
-		bag.addAsTask(t5.inFileFormat());
-		bag.addAsTask(t6.inFileFormat());
-
-		List<Task> expected = new ArrayList<>();
-		expected.add(t1);
-		expected.add(t2);
-		expected.add(t3);
-
-		String filterText = "faZer";
-		boolean caseSensitive = false;
-		
-		List<Task> actual = bag.getTasks(FilterFactory.generateAndFilter(new ArrayList<Priority>(), new ArrayList<String>(), new ArrayList<String>(), filterText, caseSensitive, true, true), null);
-
-		assertEquals(expected,actual);
-		bag.clear();
-	}
-	
-	@Test
-	public void testBagFilterByHidden() {
-		Task t1 = new Task(0, "t1", new Date());
-		Task t2 = new Task(1, "h:1 t2", new Date());
-		Task t3 = new Task(2, "t3", new Date());
-		Task t4 = new Task(3, "h:1 t4", new Date());
-		Task t5 = new Task(4, "t5", new Date());
-		Task t6 = new Task(5, "h:1 t6", new Date());
-
-		bag.addAsTask(t1.inFileFormat());
-		bag.addAsTask(t2.inFileFormat());
-		bag.addAsTask(t3.inFileFormat());
-		bag.addAsTask(t4.inFileFormat());
-		bag.addAsTask(t5.inFileFormat());
-		bag.addAsTask(t6.inFileFormat());
-		
-
-		List<Task> expected = new ArrayList<>();
-		expected.add(t1);
-		expected.add(t3);
-		expected.add(t5);
-
-		List<Task> actual = bag.getTasks(FilterFactory.generateAndFilter(new ArrayList<Priority>(), new ArrayList<String>(), new ArrayList<String>(), null, false, false, true), null);
-
-		assertEquals(expected,actual);
-		bag.clear();
-	}
-	
-	@Test
-	public void testBagFilterByThreshold() {
-		Task t1 = new Task(0, "t1 t:2018-01-01", new Date());
-		Task t2 = new Task(1, "t2 t:2018-01-02", new Date());
-		Task t3 = new Task(2, "t3 t:2022-01-01", new Date());
-		Task t4 = new Task(3, "t4 t:2023-01-01", new Date());
-		Task t5 = new Task(4, "t5 t:2018-01-04", new Date());
-		Task t6 = new Task(5, "t6", new Date());
-
-		bag.addAsTask(t1.inFileFormat());
-		bag.addAsTask(t2.inFileFormat());
-		bag.addAsTask(t3.inFileFormat());
-		bag.addAsTask(t4.inFileFormat());
-		bag.addAsTask(t5.inFileFormat());
-		bag.addAsTask(t6.inFileFormat());
-		
-		List<Task> expected = new ArrayList<>();
-		expected.add(t1);
-		expected.add(t2);
-		expected.add(t5);
-		expected.add(t6);
-
-		List<Task> actual = bag.getTasks(FilterFactory.generateAndFilter(new ArrayList<Priority>(), new ArrayList<String>(), new ArrayList<String>(), null, false, true, false), null);
-
-		assertEquals(expected,actual);
-		bag.clear();
-	}
-	
-	@Test
-	public void testBagAndFilter() {
-		Task t1 = new Task(0, "t1 @C1 @C2 +P2", new Date());
-		Task t2 = new Task(1, "t2 @C1 +P1", new Date());
-		Task t3 = new Task(2, "t3 @C2 +P2", new Date());
-		Task t4 = new Task(3, "t4 @C3 +P2", new Date());
-		Task t5 = new Task(4, "t5 @C4 +P2 +P3", new Date());
-		Task t6 = new Task(5, "t6 @C4 +P3", new Date());
-
-		bag.addAsTask(t1.inFileFormat());
-		bag.addAsTask(t2.inFileFormat());
-		bag.addAsTask(t3.inFileFormat());
-		bag.addAsTask(t4.inFileFormat());
-		bag.addAsTask(t5.inFileFormat());
-		bag.addAsTask(t6.inFileFormat());
-		
-		List<String> contexts = new ArrayList<>();
-		contexts.add("C2");
-
-		List<String> projects = new ArrayList<>();
-		projects.add("P2");
-		
-		AndFilter filter = new AndFilter();
-		filter.addFilter(new ByContextFilter(contexts));
-		filter.addFilter(new ByProjectFilter(projects));
-
-		List<Task> expected = new ArrayList<>();
-		expected.add(t1);
-		expected.add(t3);
-		
-		List<Task> actual = bag.getTasks(filter, Sorters.ID.ascending());
-
-		assertEquals(expected,actual);
-		bag.clear();
-	}
-	
-	@Test
-	public void testBagOrFilter() {
-		Task t1 = new Task(0, "t1 @C1 @C2 +P2", new Date());
-		Task t2 = new Task(1, "t2 @C1 +P1", new Date());
-		Task t3 = new Task(2, "t3 @C2 +P2", new Date());
-		Task t4 = new Task(3, "t4 @C3 +P2", new Date());
-		Task t5 = new Task(4, "t5 @C4 +P2 +P3", new Date());
-		Task t6 = new Task(5, "t6 @C4 +P3", new Date());
-
-		bag.addAsTask(t1.inFileFormat());
-		bag.addAsTask(t2.inFileFormat());
-		bag.addAsTask(t3.inFileFormat());
-		bag.addAsTask(t4.inFileFormat());
-		bag.addAsTask(t5.inFileFormat());
-		bag.addAsTask(t6.inFileFormat());
-		
-		List<String> contexts = new ArrayList<>();
-		contexts.add("C2");
-
-		List<String> projects = new ArrayList<>();
-		projects.add("P2");
-		
-		OrFilter filter = new OrFilter();
-		filter.addFilter(new ByContextFilter(contexts));
-		filter.addFilter(new ByProjectFilter(projects));
-
-		List<Task> expected = new ArrayList<>();
-		expected.add(t1);
-		expected.add(t3);
-		expected.add(t4);
-		expected.add(t5);
-		
-		List<Task> actual = bag.getTasks(filter, Sorters.ID.ascending());
-
-		assertEquals(expected,actual);
-		bag.clear();
-	}
 }
