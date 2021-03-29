@@ -410,7 +410,6 @@ public class JdotxtTaskBagImplTest {
 		bag.clear();
 	}
 	
-	//TODO: Para escrever no relatorio
 	@Test
 	public void testBagFilterByPriorityWithNothing() {
 		Task t1 = new Task(0, "t1", new Date());
@@ -479,7 +478,6 @@ public class JdotxtTaskBagImplTest {
 		bag.clear();
 	}
 
-	//TODO: Para escrever no relatorio
 	@Test
 	public void testBagFilterByContextWithNothing() {
 		Task t1 = new Task(0, "t1 @Cont1", new Date());
@@ -511,7 +509,6 @@ public class JdotxtTaskBagImplTest {
 	}
 
 
-	//TODO: Para escrever no relatorio
 	@Test
 	public void testBagFilterByContextWithNoContext() {
 		Task t1 = new Task(0, "t1", new Date());
@@ -570,7 +567,6 @@ public class JdotxtTaskBagImplTest {
 		bag.clear();
 	}
 	
-	//TODO: Para escrever no relatorio
 	@Test
 	public void testBagFilterByProjectWithNothing() {
 		Task t1 = new Task(0, "t1 +P1", new Date());
@@ -601,7 +597,6 @@ public class JdotxtTaskBagImplTest {
 		bag.clear();
 	}
 	
-	//TODO: Para escrever no relatorio
 	@Test
 	public void testBagFilterByProjectWithNoProjects() {
 		Task t1 = new Task(0, "t1 +P1", new Date());
@@ -689,7 +684,6 @@ public class JdotxtTaskBagImplTest {
 		bag.clear();
 	}
 	
-	//TODO: Para escrever no relatorio
 	@Test
 	public void testBagFilterByTest() {
 		Task t1 = new Task(0, "fazer uma coisa", new Date());
