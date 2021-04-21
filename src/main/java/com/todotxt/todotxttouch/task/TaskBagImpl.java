@@ -292,6 +292,7 @@ class TaskBagImpl implements TaskBag {
 	}
 
 	private static Task find(List<Task> tasks, Task task) {
+		if(task == null) return null;
 		Task partialMatch1 = null;
 		Task partialMatch2 = null;
 		for (Task task2 : tasks) {

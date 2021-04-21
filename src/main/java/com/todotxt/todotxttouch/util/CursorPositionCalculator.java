@@ -40,6 +40,9 @@ public final class CursorPositionCalculator {
 	 */
 	public static final int calculate(int priorCursorPosition,
 			String priorValue, String newValue) {
+		if(priorCursorPosition < 0)
+			priorCursorPosition = 0;
+		
 		if (newValue == null) {
 			return 0;
 		}

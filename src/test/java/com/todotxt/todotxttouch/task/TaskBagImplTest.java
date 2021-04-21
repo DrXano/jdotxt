@@ -86,7 +86,7 @@ public class TaskBagImplTest {
 		assertEquals(expected, updatedTasks.get(1));
 	}
 
-	@Test
+	@Test(expected = TaskPersistException.class)
 	public void testBagUpdate2() {
 		List<Task> tasks = new ArrayList<>();
 		tasks.add(new Task(0, "someTask", new Date()));
@@ -299,7 +299,7 @@ public class TaskBagImplTest {
 
 	@Test
 	public void testBagArchive2() {
-		List<Task> expected = new ArrayList<>();
+		ArrayList<Task> expected = new ArrayList<>();
 		Task t1 = new Task(0, "someTask", new Date());
 		Task t2 = new Task(1, "anyTask", new Date());
 		Task t3 = new Task(2, "noTask", new Date());
@@ -311,15 +311,21 @@ public class TaskBagImplTest {
 		expected.add(t2);
 		expected.add(t3);
 
+	
 		for(Task t : expected)
 			bag.addAsTask(t.inFileFormat());
+		
+		
+		//bag.store(expected);
 
-
+		expected.remove(t2);
+		
 		bag.archive();
 		bag.unarchive(t1);
 		bag.reload();
 		List<Task> actual = bag.getTasks();
-		assertTrue(actual.contains(t1));
+		assertEquals(expected, actual);
+		//assertTrue(actual.contains(t1));
 		bag.clear();
 	}
 
