@@ -298,7 +298,7 @@ public class JdotxtTaskBagImplTest {
 
 	@Test
 	public void testBagArchive2() {
-		List<Task> expected = new ArrayList<>();
+		ArrayList<Task> expected = new ArrayList<>();
 		Task t1 = new Task(0, "someTask", new Date());
 		Task t2 = new Task(1, "anyTask", new Date());
 		Task t3 = new Task(2, "noTask", new Date());
@@ -310,21 +310,22 @@ public class JdotxtTaskBagImplTest {
 		expected.add(t2);
 		expected.add(t3);
 
+
 		for(Task t : expected)
 			bag.addAsTask(t.inFileFormat());
 
+		expected.remove(t2);
 
 		bag.archive();
 		bag.unarchive(t1);
-		bag.reload();
-		List<Task> actual = bag.getTasks();
-		assertTrue(actual.contains(t1));
+		List<Task> actual = bag.getTasks(null,Sorters.ID.ascending());
+		assertTrue(areEqual(expected,actual));
 		bag.clear();
 	}
 
 	@Test
 	public void testBagArchive3() {
-		List<Task> expected = new ArrayList<>();
+		ArrayList<Task> expected = new ArrayList<>();
 		Task t1 = new Task(0, "someTask", new Date());
 		Task t2 = new Task(1, "anyTask", new Date());
 		Task t3 = new Task(2, "noTask", new Date());
@@ -342,15 +343,16 @@ public class JdotxtTaskBagImplTest {
 
 		bag.archive();
 		bag.unarchive(new Task(-1, "someTask", new Date()));
-		bag.reload();
-		List<Task> actual = bag.getTasks();
-		assertTrue(actual.contains(t1));
+		t1.markIncomplete();
+		expected.remove(t2);
+		List<Task> actual = bag.getTasks(null,Sorters.ID.ascending());
+		assertTrue(areEqual(expected,actual));
 		bag.clear();
 	}
 
 	@Test
 	public void testBagArchive4() {
-		List<Task> expected = new ArrayList<>();
+		ArrayList<Task> expected = new ArrayList<>();
 		Task t1 = new Task(0, "someTask", new Date());
 		Task t2 = new Task(1, "anyTask", new Date());
 		Task t3 = new Task(2, "noTask", new Date());
@@ -368,12 +370,23 @@ public class JdotxtTaskBagImplTest {
 
 		bag.archive();
 		bag.unarchive(new Task(5, "noTask", new Date()));
-		bag.reload();
-		List<Task> actual = bag.getTasks();
-		assertTrue(actual.contains(t3));
+		t3.markIncomplete();
+		expected.remove(t2);
+		List<Task> actual = bag.getTasks(null,Sorters.ID.ascending());
+		assertTrue(areEqual(expected,actual));
 		bag.clear();
 	}
 
+	private boolean areEqual(ArrayList<Task> expected, List<Task> actual) {
+		if(expected.size() != actual.size()) return false;
+		if(expected == null || actual == null) return false;
+
+		for(int i = 0; i < actual.size(); i++) {
+			if(!expected.get(i).inFileFormat().equals(actual.get(i).inFileFormat()))
+				return false;
+		}
+		return true;
+	}
 	@Test
 	public void testBagFilterByPriority() {
 		Task t1 = new Task(0, "t1", new Date());
