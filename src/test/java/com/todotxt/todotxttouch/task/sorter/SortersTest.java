@@ -646,7 +646,8 @@ public class SortersTest {
 		assertTrue(result == -1);
 	}
 	
-	//Mutant 1
+	//Mutantes
+	
 	@Test
 	public void testSorterbyGetName() {
 				
@@ -654,44 +655,7 @@ public class SortersTest {
 		
 		assertEquals("Priority",x);
 	}
-	
-	//Mutant 2
-	@Test
-	public void testSorterByDifLists() {
-		
-		List<String> p1 = Arrays.asList("a", "b", "c");
-        List<String> p2 = Arrays.asList("x", "y", "z");
-		
-        int expected = -23;
-		int actual = Sorters.PROJECTS.compareLists(p1, p2);
-		assertEquals(expected,actual);
-	}
-	
-	//Mutant 3
-	@Test
-	public void testSorterByCompareListsNull() {
-		
-		List<String> p1 = Arrays.asList(null, null);
-        List<String> p2 = Arrays.asList(null, null);
-		
-        int expected = 0;
-		int actual = Sorters.PROJECTS.compareLists(p1, p2);
-		assertEquals(expected,actual);
-	}
-	
-	//Mutant 4
-	@Test
-	public void testSorterByCompareS1NullS2Not() {
-		
-		List<String> p1 = Arrays.asList(null, null, "c");
-        List<String> p2 = Arrays.asList(null, "y", "z");
-		
-        int expected = -1;
-		int actual = Sorters.PROJECTS.compareLists(p1, p2);
-		assertEquals(expected,actual);
-	}
-	
-	//Mutant 4
+
 	@Test
 	public void testSorterByCompareS2NullS1Not() {
 		
@@ -699,7 +663,7 @@ public class SortersTest {
         List<String> p2 = Arrays.asList(null, null, "z");
 		
         int expected = 1;
-		int actual = Sorters.PROJECTS.compareLists(p1, p2);
+		int actual = Sorters.compareLists(p1, p2);
 		assertEquals(expected,actual);
 	}
 	
