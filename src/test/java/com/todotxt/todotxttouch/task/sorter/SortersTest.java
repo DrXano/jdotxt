@@ -656,17 +656,52 @@ public class SortersTest {
 	}
 	
 	//Mutant 2
-	/*
+	@Test
+	public void testSorterByDifLists() {
+		
+		List<String> p1 = Arrays.asList("a", "b", "c");
+        List<String> p2 = Arrays.asList("x", "y", "z");
+		
+        int expected = -23;
+		int actual = Sorters.PROJECTS.compareLists(p1, p2);
+		assertEquals(expected,actual);
+	}
+	
+	//Mutant 3
 	@Test
 	public void testSorterByCompareListsNull() {
 		
 		List<String> p1 = Arrays.asList(null, null);
-        List<String> p2 = Arrays.asList("a", "b");
+        List<String> p2 = Arrays.asList(null, null);
+		
+        int expected = 0;
+		int actual = Sorters.PROJECTS.compareLists(p1, p2);
+		assertEquals(expected,actual);
+	}
+	
+	//Mutant 4
+	@Test
+	public void testSorterByCompareS1NullS2Not() {
+		
+		List<String> p1 = Arrays.asList(null, null, "c");
+        List<String> p2 = Arrays.asList(null, "y", "z");
 		
         int expected = -1;
 		int actual = Sorters.PROJECTS.compareLists(p1, p2);
 		assertEquals(expected,actual);
-	}*/
+	}
+	
+	//Mutant 4
+	@Test
+	public void testSorterByCompareS2NullS1Not() {
+		
+		List<String> p1 = Arrays.asList(null, "y", "c");
+        List<String> p2 = Arrays.asList(null, null, "z");
+		
+        int expected = 1;
+		int actual = Sorters.PROJECTS.compareLists(p1, p2);
+		assertEquals(expected,actual);
+	}
 	
 	private Date getaDate(int days) {
 		Date dt = new Date();
