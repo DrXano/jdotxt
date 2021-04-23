@@ -97,4 +97,15 @@ public class TreeTest {
 		assertEquals(expected,parent.getChild(1));
 	}
 
+	//Mutantes
+	
+	@Test
+	public void testContainsData4() {
+		Tree<String> parent = new Tree<>("Olá");
+		parent.setLoaded();
+		parent.addChild("Ok");
+		parent.addChild("sim");
+		parent.addChild("nao");
+		assertFalse(parent.contains("algo"));
+	}
 }

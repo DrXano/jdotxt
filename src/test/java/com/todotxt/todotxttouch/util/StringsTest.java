@@ -43,7 +43,7 @@ public class StringsTest {
 		String s = "aaa ccc bbb";
 		String stringToInsert = "ccc";
 		int insertAt = 3;
-		String expected = "aaa ccc bbb";
+		String expected = "aaa ccc bbb ";
 		String actual = Strings.insertPaddedIfNeeded(s, insertAt, stringToInsert);
 		assertEquals(expected, actual);
 	}
@@ -69,7 +69,7 @@ public class StringsTest {
 		String s = "ccc aaabbb";
 		String stringToInsert = "ccc";
 		int insertAt = 0;
-		String expected = "ccc aaabbb";
+		String expected = "ccc aaabbb ";
 		String actual = Strings.insertPaddedIfNeeded(s, insertAt, stringToInsert);
 		assertEquals(expected, actual);
 	}
@@ -104,10 +104,11 @@ public class StringsTest {
 		String s = "";
 		String stringToInsert = "ccc";
 		int insertAt = 0;
-		String expected = "ccc";
+		String expected = "ccc ";
 		String actual = Strings.insertPaddedIfNeeded(s, insertAt, stringToInsert);
 		assertEquals(expected, actual);
 	}
+
 
 	//----------------------------------------------------------------------------------------------------------
 	//------------------------------------------------isBlank()-------------------------------------------------
@@ -235,7 +236,7 @@ public class StringsTest {
 		String s = "";
 		String stringToInsert = "ccc";
 		int insertAt = 0;
-		String expected = "ccc";
+		String expected = "ccc ";
 		String actual = Strings.insertPadded(s, insertAt, stringToInsert);
 		assertEquals(expected, actual);
 	}
@@ -299,7 +300,7 @@ public class StringsTest {
 	 */
 	public void testInsertAtSLength() {
 		int insertAt = 6;
-		String expected = "qwerty abc";
+		String expected = "qwerty abc ";
 		String actual = Strings.insertPadded(s, insertAt, stringToInsert);
 		assertEquals(expected, actual);
 	}
@@ -350,4 +351,80 @@ public class StringsTest {
 		int insertAt = 9;
 		Strings.insertPadded(s, insertAt, stringToInsert);
 	}
+	
+	
+	//Mutantes
+	
+	@Test
+	public void testIfNeededInsertNull() {
+		String s = "abc";
+		String stringToInsert = null;
+		int insertAt = 0;
+		String expected = "abc";
+		String actual = Strings.insertPaddedIfNeeded(s, insertAt, stringToInsert);
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void testInsertPaddedInsertNull() {
+		String s = "abc";
+		String stringToInsert = null;
+		int insertAt = 0;
+		String expected = "abc";
+		String actual = Strings.insertPadded(s, insertAt, stringToInsert);
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	/*
+	 * Method - insertPaddedIfNeeded
+	 */
+	public void testIfNeededEndInSpace() {
+		String s = "xyz ";
+		String stringToInsert = "xyz";
+		int insertAt = 2;
+		String expected = "xyz ";
+		String actual = Strings.insertPaddedIfNeeded(s, insertAt, stringToInsert);
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	/*
+	 * Method - insertPaddedIfNeeded
+	 */
+	public void testInsertPaddedEndInSpace() {
+		String s = "xyz ";
+		String stringToInsert = "xyz";
+		int insertAt = 4;
+		String expected = "xyz xyz ";
+		String actual = Strings.insertPadded(s, insertAt, stringToInsert);
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	/*
+	 * Method - insertPaddedIfNeeded
+	 */
+	public void testIfNeededCycleIteration() {
+		String s = "abcxx xa x";
+		String stringToInsert = "x";
+		int insertAt = 3;
+		String expected = "abcxx xa x ";
+		String actual = Strings.insertPaddedIfNeeded(s, insertAt, stringToInsert);
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	/*
+	 * Method - insertPaddedIfNeeded
+	 */
+	public void testIfNeededEqual() {
+		String s = "xyz";
+		String stringToInsert = "xyz";
+		int insertAt = 2;
+		String expected = "xyz ";
+		String actual = Strings.insertPaddedIfNeeded(s, insertAt, stringToInsert);
+		assertEquals(expected, actual);
+	}
+	
 }

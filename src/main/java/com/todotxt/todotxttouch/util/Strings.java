@@ -73,7 +73,7 @@ public final class Strings {
 			newText.append(s);
 		}
 		
-		return newText.toString().trim();
+		return newText.toString();
 	}
 
 	/**
@@ -127,7 +127,7 @@ public final class Strings {
 				newText.append(SINGLE_SPACE);
 			}
 			
-			return( newText.toString().trim());
+			return( newText.toString());
 		}
 		else
 			return( Strings.insertPadded(s, insertAt, stringToInsert) );

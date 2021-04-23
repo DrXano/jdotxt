@@ -4,9 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.prefs.Preferences;
 
 import org.junit.Before;
@@ -643,6 +645,28 @@ public class SortersTest {
 		int result = Sorters.compareDates(new Date(), null, true);
 		assertTrue(result == -1);
 	}
+	
+	//Mutant 1
+	@Test
+	public void testSorterbyGetName() {
+				
+		String x = Sorters.PRIORITY.getName();
+		
+		assertEquals("Priority",x);
+	}
+	
+	//Mutant 2
+	/*
+	@Test
+	public void testSorterByCompareListsNull() {
+		
+		List<String> p1 = Arrays.asList(null, null);
+        List<String> p2 = Arrays.asList("a", "b");
+		
+        int expected = -1;
+		int actual = Sorters.PROJECTS.compareLists(p1, p2);
+		assertEquals(expected,actual);
+	}*/
 	
 	private Date getaDate(int days) {
 		Date dt = new Date();
