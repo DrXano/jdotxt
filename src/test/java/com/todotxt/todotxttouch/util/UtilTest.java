@@ -265,5 +265,22 @@ public class UtilTest {
 		wr.append("three");
 		wr.close();
 	}
+	
+	//Mutantes
+	
+	@Test
+	public void testIsDeviceReadable() {
+		assertTrue(Util.isDeviceReadable());
+	}
+	
+	@Test(expected = TodoException.class)
+	public void testcopyFileNotExists() throws IOException {
+		File origFile = new File(DEFAULTDIR + File.separator + "origFile.txt");
+		File newFile = new File(DEFAULTDIR + File.separator + "newFile.txt");
+		newFile.createNewFile();
+		Util.copyFile(origFile, newFile, true);
+		origFile.delete();
+		newFile.delete();
+	}
 
 }
