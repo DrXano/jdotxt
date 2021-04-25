@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -276,7 +278,7 @@ public class TaskBagImplTest {
 
 	@Test
 	public void testBagArchive1() {
-		List<Task> expected = new ArrayList<>();
+		ArrayList<Task> expected = new ArrayList<>();
 		Task t1 = new Task(0, "someTask", new Date());
 		Task t2 = new Task(1, "anyTask", new Date());
 		Task t3 = new Task(2, "noTask", new Date());
@@ -284,16 +286,16 @@ public class TaskBagImplTest {
 		t2.markComplete(new Date());
 
 		expected.add(t1);
-		expected.add(t2);
 		expected.add(t3);
-
-		for(Task t : expected)
-			bag.addAsTask(t.inFileFormat());
+		
+		bag.addAsTask(t1.inFileFormat());
+		bag.addAsTask(t2.inFileFormat());
+		bag.addAsTask(t3.inFileFormat());
 
 		bag.archive();
 		bag.reload();
 		List<Task> actual = bag.getTasks();
-		assertFalse(actual.contains(t2));
+		assertTrue(areEqual(expected,actual));
 		bag.clear();
 	}
 
@@ -307,19 +309,16 @@ public class TaskBagImplTest {
 		t1.markComplete(new Date());
 		t2.markComplete(new Date());
 
-		expected.add(t1);
-		expected.add(t2);
 		expected.add(t3);
-
-
-		for(Task t : expected)
-			bag.addAsTask(t.inFileFormat());
-
-		expected.remove(t2);
+		expected.add(t1);
+		
+		bag.addAsTask(t1.inFileFormat());
+		bag.addAsTask(t2.inFileFormat());
+		bag.addAsTask(t3.inFileFormat());
 
 		bag.archive();
 		bag.unarchive(t1);
-		List<Task> actual = bag.getTasks(null,Sorters.ID.ascending());
+		List<Task> actual = bag.getTasks();
 		assertTrue(areEqual(expected,actual));
 		bag.clear();
 	}
@@ -335,18 +334,16 @@ public class TaskBagImplTest {
 		t2.markComplete(new Date());
 
 		expected.add(t1);
-		expected.add(t2);
 		expected.add(t3);
 
-		for(Task t : expected)
-			bag.addAsTask(t.inFileFormat());
-
+		bag.addAsTask(t1.inFileFormat());
+		bag.addAsTask(t2.inFileFormat());
+		bag.addAsTask(t3.inFileFormat());
 
 		bag.archive();
 		bag.unarchive(new Task(-1, "someTask", new Date()));
 		t1.markIncomplete();
-		expected.remove(t2);
-		List<Task> actual = bag.getTasks(null,Sorters.ID.ascending());
+		List<Task> actual = bag.getTasks();
 		assertTrue(areEqual(expected,actual));
 		bag.clear();
 	}
@@ -362,21 +359,71 @@ public class TaskBagImplTest {
 		t3.markComplete(new Date());
 
 		expected.add(t1);
-		expected.add(t2);
 		expected.add(t3);
 
-		for(Task t : expected)
-			bag.addAsTask(t.inFileFormat());
-
+		bag.addAsTask(t1.inFileFormat());
+		bag.addAsTask(t2.inFileFormat());
+		bag.addAsTask(t3.inFileFormat());
 
 		bag.archive();
 		bag.unarchive(new Task(5, "noTask", new Date()));
 		t3.markIncomplete();
-		expected.remove(t2);
-		List<Task> actual = bag.getTasks(null,Sorters.ID.ascending());
+		List<Task> actual = bag.getTasks();
 		assertTrue(areEqual(expected,actual));
 		bag.clear();
 	}
+	
+	@Test
+	public void testBagArchive5() throws ParseException {
+		ArrayList<Task> expected = new ArrayList<>();
+		Task t1 = new Task(0, "someTask", new Date());
+		Task t2 = new Task(1, "anyTask", new Date());
+		Task t3 = new Task(2, "noTask", new Date());
+
+		t1.markComplete(new Date());
+		t2.markComplete(new Date());
+		
+		bag.addAsTask(t1.inFileFormat());
+		bag.addAsTask(t2.inFileFormat());
+		bag.addAsTask(t3.inFileFormat());
+
+		Task tn = new Task(1, "moreTask", getMockDate("2000-01-01"));
+		
+		bag.archive();
+		bag.unarchive(tn);
+		expected.add(t3);
+		expected.add(tn);
+		List<Task> actual = bag.getTasks();
+		assertTrue(areEqual(expected,actual));
+		
+		bag.clear();
+	}
+
+	@Test
+	public void testBagArchive6() throws ParseException {
+		ArrayList<Task> expected = new ArrayList<>();
+		Task t1 = new Task(0, "someTask", new Date());
+		Task t2 = new Task(1, "anyTask", new Date());
+		Task t3 = new Task(2, "noTask", new Date());
+
+		t1.markComplete(new Date());
+		t2.markComplete(new Date());
+		
+		bag.addAsTask(t1.inFileFormat());
+		bag.addAsTask(t2.inFileFormat());
+		bag.addAsTask(t3.inFileFormat());
+
+		Task tn = new Task(0, "moreTask", getMockDate("2000-01-01"));
+		
+		bag.archive();
+		bag.unarchive(tn);
+		expected.add(tn);
+		expected.add(t3);
+		List<Task> actual = bag.getTasks();
+		assertTrue(areEqual(expected,actual));
+		
+		bag.clear();
+	}	
 
 	private boolean areEqual(ArrayList<Task> expected, List<Task> actual) {
 		if(expected.size() != actual.size()) return false;
@@ -455,5 +502,8 @@ public class TaskBagImplTest {
 		bag.clear();
 	}
 
+	private Date getMockDate(String date) throws ParseException {
+		return new SimpleDateFormat("yyyy-MM-dd").parse(date);
+	}
 
 }

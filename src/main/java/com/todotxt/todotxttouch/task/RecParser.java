@@ -14,6 +14,8 @@ public class RecParser {
     }
 
     public String[] parse(String text) {
+    	if(text == null) return null;
+    	
         String[] res = null;
 
         Matcher m = p.matcher(text);

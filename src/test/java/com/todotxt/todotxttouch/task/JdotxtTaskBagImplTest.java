@@ -855,4 +855,18 @@ public class JdotxtTaskBagImplTest {
 		assertEquals(expected,actual);
 		bag.clear();
 	}
+
+	@Test
+	public void testByTextFilterContent1() {
+		ByTextFilter filt = new ByTextFilter("Hello", false);
+		assertEquals("HELLO",filt.getText());
+		assertFalse(filt.isCaseSensitive());
+	}
+
+	@Test
+	public void testByTextFilterContent2() {
+		ByTextFilter filt = new ByTextFilter("Hello", true);
+		assertEquals("Hello",filt.getText());
+		assertTrue(filt.isCaseSensitive());
+	}
 }

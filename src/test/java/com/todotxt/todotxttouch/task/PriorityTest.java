@@ -88,4 +88,32 @@ public class PriorityTest {
 		priosStr.add("Z");
 		assertEquals(expected,Priority.toPriority(priosStr));
 	}
+	
+	@Test
+	public void testInListFormat() {
+		String expected = "A";
+		String actual = Priority.A.inListFormat();
+		assertEquals(expected,actual);
+	}
+	
+	@Test
+	public void testInDetailFormat() {
+		String expected = "A";
+		String actual = Priority.A.inDetailFormat();
+		assertEquals(expected,actual);
+	}
+	
+	@Test
+	public void testPrioritySmallRangeInCode() {
+		List<String> expected = new ArrayList<>();
+		expected.add("C");
+		assertEquals(expected,Priority.rangeInCode(Priority.C,Priority.C));
+	}
+	
+	@Test
+	public void testToPriorityWithUnsualString() {
+		Priority actual = Priority.toPriority("Ola");
+		Priority expected = Priority.NONE;
+		assertEquals(expected,actual);
+	}
 }
